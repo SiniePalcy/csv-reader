@@ -12,7 +12,7 @@ namespace CsvReader
         private readonly StateMachine _stateMachine;
 
         private HashSet<string> _headers = new();
-        private StringBuilder _currentBuffer = new();
+        private StringBuilder _currentValueBuffer = new();
         private List<Dictionary<string, string>> _content = new();
 
         public CsvFile(string fileName)
@@ -54,7 +54,7 @@ namespace CsvReader
 
                 if (_stateMachine.Process(symbolType, 0, col))
                 {
-                    _currentBuffer.Append(ch);
+                    _currentValueBuffer.Append(ch);
                 }
                 else if (_stateMachine.IsEndValue)
                 {
@@ -67,7 +67,7 @@ namespace CsvReader
                 }
             }
 
-            if (_currentBuffer.Length > 0)
+            if (_currentValueBuffer.Length > 0)
             {
                 _headers.Add(FlushBuffer());
             }
@@ -88,7 +88,7 @@ namespace CsvReader
 
                 if (_stateMachine.Process(symbolType, row, col))
                 {
-                    _currentBuffer.Append(ch);
+                    _currentValueBuffer.Append(ch);
                 }
                 else if (_stateMachine.IsEndValue)
                 {
@@ -98,13 +98,9 @@ namespace CsvReader
 
                 if (_stateMachine.CurrentState == State.EndLine)
                 {
-                    EnsureStructureIsValid(currentHeaderIndex, row, col);
-
+                    EnsureValuesCountIsValid(currentHeaderIndex, row, col);
                     _content.Add(currentRow);
-                    currentRow = new();
-                    currentHeaderIndex = 0;
-                    col = 0;
-                    row++;
+                    ResetBuffersForNewLine();
                 }
                 else
                 {
@@ -122,6 +118,14 @@ namespace CsvReader
                 PushValueToRow(currentRow, headers[currentHeaderIndex]);
                 _content.Add(currentRow);
             }
+
+            void ResetBuffersForNewLine()
+            {
+                currentRow = new();
+                currentHeaderIndex = 0;
+                col = 0;
+                row++;
+            }
         }
 
         private (char, SymbolType) ReadSymbol(StreamReader sr)
@@ -136,7 +140,7 @@ namespace CsvReader
             row.Add(header, FlushBuffer());
         }
 
-        private void EnsureStructureIsValid(uint lastHeaderNumber, uint row, uint col)
+        private void EnsureValuesCountIsValid(uint lastHeaderNumber, uint row, uint col)
         {
             if (lastHeaderNumber != _headers.Count)
             {
@@ -147,8 +151,8 @@ namespace CsvReader
 
         private string FlushBuffer()
         {
-            string result = _currentBuffer.ToString();
-            _currentBuffer.Clear();
+            string result = _currentValueBuffer.ToString();
+            _currentValueBuffer.Clear();
             return result;
         }
     }
