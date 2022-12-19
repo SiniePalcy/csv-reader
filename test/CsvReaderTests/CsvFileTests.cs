@@ -179,7 +179,35 @@ namespace CsvReaderTests
             Assert.AreEqual("", file[4, "address"]);
         }
 
+        [TestMethod]
+        public void EmptyValuesInMultiline_Valid_Test()
+        {
+            ICsvFile file = new CsvFile(GetFullName("empty_values_in_multiline.csv"));
 
+            Assert.AreEqual(2, file.RowsCount);
+
+            var columns = file.Columns.ToList();
+            Assert.AreEqual("name", columns[0]);
+            Assert.AreEqual("", columns[1]);
+
+            Assert.AreEqual("Messi", file[1, ""]);
+            Assert.AreEqual("", file[0, ""]);
+        }
+
+        [TestMethod]
+        public void EmptyValuesInHeader_Valid_Test()
+        {
+            ICsvFile file = new CsvFile(GetFullName("empty_values_in_headers.csv"));
+
+            Assert.AreEqual(2, file.RowsCount);
+
+            var columns = file.Columns.ToList();
+            Assert.AreEqual("name", columns[0]);
+            Assert.AreEqual("", columns[1]);
+
+            Assert.AreEqual("Messi", file[1, ""]);
+            Assert.AreEqual("", file[0, ""]);
+        }
 
         private string GetFullName(string fileName) => Path.Combine("Templates", fileName);
         
