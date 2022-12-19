@@ -6,16 +6,16 @@ Create a CSV file reader by implementing an interface described below.
 Approach
 	Use Specification document: 
 		o https://datatracker.ietf.org/doc/html/rfc4180
-			ï See ìDefinition of the CSV Formatî topic as a reference 
+			‚Ä¢ See ‚ÄúDefinition of the CSV Format‚Äù topic as a reference 
 		o Additional requirements 
-			ï CSV file must contain Header (column names) 
-			ï Columns cannot be duplicated 
-			ï Value can be empty 
+			‚Ä¢ CSV file must contain Header (column names) 
+			‚Ä¢ Columns cannot be duplicated 
+			‚Ä¢ Value can be empty 
 	Project should be created on dotnet 5 or 6 
 		o https://dotnet.microsoft.com/en-us/download/dotnet/5.0
 		o https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
 	Implement the interface described in appendix below 
-	Donít use third party libraries for CSV file parsing functionality 
+	Don‚Äôt use third party libraries for CSV file parsing functionality 
 	Good to have but not required: 
 		o Support of multiline values 
 		o Unit Tests 
