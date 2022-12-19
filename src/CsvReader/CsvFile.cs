@@ -58,7 +58,11 @@ namespace CsvReader
                 }
                 else if (_stateMachine.IsEndValue)
                 {
-                    _headers.Add(FlushBuffer());
+                    var header = FlushBuffer();
+                    if (!_headers.Add(header))
+                    {
+                        throw new CsvFileColumnsDublicatedException(new Position(0, col), "Column '{header}' already exists");
+                    }
                 }
 
                 if (!symbolType.IsControlSymbol())

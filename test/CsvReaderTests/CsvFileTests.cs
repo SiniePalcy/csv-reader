@@ -209,6 +209,13 @@ namespace CsvReaderTests
             Assert.AreEqual("", file[0, ""]);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(CsvFileColumnsDublicatedException))]
+        public void ColumnsDublicated_ShouldThrowsException_Test()
+        {
+            new CsvFile(GetFullName("columns_dublicated.csv"));
+        }
+
         private string GetFullName(string fileName) => Path.Combine("Templates", fileName);
         
     }
