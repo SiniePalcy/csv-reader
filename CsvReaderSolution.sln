@@ -7,9 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7CD38C95-3A8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2AA1BDF5-3AA2-41E7-A879-978B1120FF37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvReader", "src\CsvReader\CsvReader.csproj", "{DD92CF0D-7B94-4F24-BC75-C23E2B2D98D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvReader", "src\CsvReader\CsvReader.csproj", "{DD92CF0D-7B94-4F24-BC75-C23E2B2D98D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvReaderTests", "test\CsvReaderTests\CsvReaderTests.csproj", "{C0B2214F-01A4-4A2D-87CC-BB5F84CB1EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvReaderTests", "test\CsvReaderTests\CsvReaderTests.csproj", "{C0B2214F-01A4-4A2D-87CC-BB5F84CB1EA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67218B08-192B-4B10-AC9A-88792A1CAD52}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
