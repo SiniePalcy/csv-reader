@@ -1,0 +1,6 @@
+name,surname,address,city,state,zipcode
+John,Doe,12"0 jefferson st.,Riverside, NJ,8075
+Jack,McGinnis,220 hobo Av.,Phila, PA,9119
+"John ""Da Man""",Repici,120 Jefferson St.,Riverside, NJ,8075
+Stephen,Tyler,"7452 Terrace ""At the Plaza"" road",SomeTown,SD,91234
+,Blankman,,SomeTown, SD,298
