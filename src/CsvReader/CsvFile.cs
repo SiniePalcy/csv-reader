@@ -81,10 +81,10 @@ namespace CsvReader
             uint col = 0;
             uint row = 1;
 
-            var headerArray = _headers.ToArray();
-            uint headerNumber = 0;
+            var headers = _headers.ToArray();
+            uint currentHeaderIndex = 0;
 
-            var currentRowObject = new Dictionary<string, string>();
+            var currentRow = new Dictionary<string, string>();
             while (!sr.EndOfStream && !_stateMachine.IsStopped)
             {
                 var (ch, symbolType) = ReadSymbol(sr);
@@ -95,17 +95,17 @@ namespace CsvReader
                 }
                 else if (_stateMachine.IsEndValue)
                 {
-                    currentRowObject.Add(headerArray[headerNumber], FlushBuffer());
-                    headerNumber++;
+                    PushValueToRow(currentRow, headers[currentHeaderIndex]);
+                    currentHeaderIndex++;
                 }
 
                 if (_stateMachine.CurrentState == State.EndLine)
                 {
-                    EnsureStructureIsValid(headerNumber, row, col);
+                    EnsureStructureIsValid(currentHeaderIndex, row, col);
 
-                    _content.Add(currentRowObject);
-                    currentRowObject = new();
-                    headerNumber = 0;
+                    _content.Add(currentRow);
+                    currentRow = new();
+                    currentHeaderIndex = 0;
                     col = 0;
                     row++;
                 }
@@ -120,10 +120,10 @@ namespace CsvReader
 
             _stateMachine.Process(SymbolType.EndOfFile, row, col);
 
-            if (_currentBuffer.Length > 0 || headerNumber == _headers.Count - 1)
+            if (currentHeaderIndex == _headers.Count - 1)
             {
-                currentRowObject.Add(headerArray[headerNumber], FlushBuffer());
-                _content.Add(currentRowObject);
+                PushValueToRow(currentRow, headers[currentHeaderIndex]);
+                _content.Add(currentRow);
             }
         }
 
@@ -134,9 +134,14 @@ namespace CsvReader
             return (ch, symbolType);
         }
 
-        private void EnsureStructureIsValid(uint headerNumber, uint row, uint col)
+        private void PushValueToRow(Dictionary<string, string> row, string header)
         {
-            if (headerNumber != _headers.Count)
+            row.Add(header, FlushBuffer());
+        }
+
+        private void EnsureStructureIsValid(uint lastHeaderNumber, uint row, uint col)
+        {
+            if (lastHeaderNumber != _headers.Count)
             {
                 _stateMachine.Abort();
                 throw new CsvFileInvalidStructureException(new Position(row, col), "Count values end headers must be same");

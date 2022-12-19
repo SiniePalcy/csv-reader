@@ -25,7 +25,6 @@ namespace CsvReader
 
             try
             {
-
                 (CurrentState, shouldSaveSymb) = (CurrentState, symbol) switch
                 {
                     (State.BeginLine, SymbolType.Text) => (State.ReadValue, true),
