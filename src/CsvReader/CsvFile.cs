@@ -30,10 +30,7 @@ namespace CsvReader
 
         public int RowsCount => _content.Count;
         public IEnumerable<string> Columns => _headers;
-        public string this[int rowIndex, string column] 
-        {
-            get => _content[rowIndex][column];
-        }
+        public string this[int rowIndex, string column] => _content[rowIndex][column];
 
         private void ReadFile(string fileName)
         {

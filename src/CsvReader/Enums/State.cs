@@ -2,12 +2,6 @@
 {
     internal enum State
     {
-        //Start,
-        //EndHeader,
-        //BeginHeaderValue,
-        //EndHeaderValue,
-        //BeginHeaderMultilineValue,
-        //EndHeaderMultilineValue,
         BeginLine,
         EndLine,
         ReadValue,
