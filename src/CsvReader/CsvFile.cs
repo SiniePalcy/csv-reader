@@ -53,8 +53,7 @@ namespace CsvReader
             uint col = 0;
             while (!sr.EndOfStream && _stateMachine.CurrentState != State.EndLine && !_stateMachine.IsStopped)
             {
-                char ch = (char)sr.Read();
-                SymbolType symbolType = ch.ResolveSymbolType();
+                var (ch, symbolType) = ReadSymbol(sr);
 
                 if (_stateMachine.Process(symbolType, 0, col))
                 {
@@ -88,8 +87,7 @@ namespace CsvReader
             var currentRowObject = new Dictionary<string, string>();
             while (!sr.EndOfStream && !_stateMachine.IsStopped)
             {
-                char ch = (char)sr.Read();
-                SymbolType symbolType = ch.ResolveSymbolType();
+                var (ch, symbolType) = ReadSymbol(sr);
 
                 if (_stateMachine.Process(symbolType, row, col))
                 {
@@ -127,6 +125,13 @@ namespace CsvReader
                 currentRowObject.Add(headerArray[headerNumber], FlushBuffer());
                 _content.Add(currentRowObject);
             }
+        }
+
+        private (char, SymbolType) ReadSymbol(StreamReader sr)
+        {
+            char ch = (char)sr.Read();
+            SymbolType symbolType = ch.ResolveSymbolType();
+            return (ch, symbolType);
         }
 
         private void EnsureStructureIsValid(uint headerNumber, uint row, uint col)
