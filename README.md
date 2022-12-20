@@ -40,6 +40,7 @@ The class that implements ICsvFile interface allows:
 
 #### The Interface 
 
+CSV file presenter
 ```csharp
 public interface ICsvFile 
 { 
@@ -49,18 +50,10 @@ public interface ICsvFile
 }
 ```
 
-#### The class 
-
-Use the boilerplate class below for implementation.
+CSV reader
 ```csharp
-public class CsvFile : ICsvFile 
+public interface ICsvReader
 {
-    public CsvFile(string fileName)
-    {
-    }
-        
-    public int RowsCount => throw new NotImplementedException();
-    public IEnumerable<string> Columns => throw new NotImplementedException();
-    public string this[int rowIndex, string column] => throw new NotImplementedException();
+    Task<ICsvFile> ReadAsync();
 }
 ```
