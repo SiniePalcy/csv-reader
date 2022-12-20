@@ -2,7 +2,7 @@
 
 ### Goal
 
-Create a CSV file reader by implementing an interface described below. 
+Create an async CSV file reader by implementing an interface described below. 
 
 ---
 
@@ -15,10 +15,11 @@ Create a CSV file reader by implementing an interface described below.
     - CSV file must contain Header (column names) 
     - Columns cannot be duplicated
     - Value can be empty 
+    - Asynchronous reading from file
 * Project should be created on dotnet 5 or 6 
   + https://dotnet.microsoft.com/en-us/download/dotnet/5.0
   + https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
-* Implement the interface described in appendix below 
+* Implement the interfaces described in appendix below 
 * Don’t use third party libraries for CSV file parsing functionality 
 * Good to have but not required: 
   + Support of multiline values 
@@ -38,7 +39,7 @@ The class that implements ICsvFile interface allows:
 
 ### Appendix 
 
-#### The Interface 
+#### The Interfaces 
 
 CSV file presenter
 ```csharp
