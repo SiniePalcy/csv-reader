@@ -6,6 +6,13 @@ Create a CSV file reader by implementing an interface described below.
 
 ---
 
+### Branches
+
+* main - synchronous version according description below
+* v2 - asynchronous version
+
+---
+
 ### Approach
 
 * Use Specification document: 
