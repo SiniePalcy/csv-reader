@@ -2,24 +2,31 @@
 using CsvReader.Contract;
 using CsvReader;
 
-ICsvFile csvFile = new CsvFile("addresses.csv");
-Output(csvFile);
-
-void Output(ICsvFile file)
+class Program
 {
-    Console.WriteLine("CSV File: ");
-    foreach (var header in file.Columns)
+    public static async Task Main()
     {
-        Console.Write("{0, -20}|", header);
+        ICsvReader csvReader = new CsvFileReader("addresses.csv");
+        ICsvFile csvFile = await csvReader.ReadAsync();
+        Output(csvFile);
     }
-    Console.WriteLine();
 
-    for(int row = 0; row < file.RowsCount; row++)
+    static void Output(ICsvFile file)
     {
-        foreach (var col in file.Columns)
+        Console.WriteLine("CSV File: ");
+        foreach (var header in file.Columns)
         {
-            Console.Write("{0, -20}|", csvFile[row, col]);
+            Console.Write("{0, -20}|", header);
         }
         Console.WriteLine();
+
+        for (int row = 0; row < file.RowsCount; row++)
+        {
+            foreach (var col in file.Columns)
+            {
+                Console.Write("{0, -20}|", file[row, col]);
+            }
+            Console.WriteLine();
+        }
     }
 }

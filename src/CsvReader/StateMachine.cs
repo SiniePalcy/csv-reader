@@ -16,12 +16,12 @@ namespace CsvReader
 
         public bool Process(SymbolType symbol, uint row, uint col)
         {
+            bool shouldSaveSymb;
+
             if (IsStopped)
             {
                 return false;
             }
-
-            bool shouldSaveSymb;
 
             try
             {
