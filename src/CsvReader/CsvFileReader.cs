@@ -36,13 +36,12 @@ namespace CsvReader
             return new CsvFile(headers, content);
         }
 
-        private async Task<ICollection<string>> ReadHeadersAsync(StreamReader sr)
-        {
-            HashSet<string> headers = new();
-            StringBuilder currentValueBuffer = new();
-
-            await Task.Run(() =>
+        private Task<ICollection<string>> ReadHeadersAsync(StreamReader sr) =>
+            Task.Run(() =>
             {
+                HashSet<string> headers = new();
+                StringBuilder currentValueBuffer = new();
+
                 uint col = 0;
                 while (!sr.EndOfStream && _stateMachine!.CurrentState != State.EndLine && !_stateMachine.IsStopped)
                 {
@@ -72,18 +71,16 @@ namespace CsvReader
                 {
                     headers.Add(FlushBuffer(currentValueBuffer));
                 }
+
+                return headers as ICollection<string>;
             });
 
-            return headers;
-        }
-
-        private async Task<List<Dictionary<string, string>>> ReadContentAsync(StreamReader sr, IReadOnlyList<string> headers)
-        {
-            List<Dictionary<string, string>> content = new();
-            StringBuilder currentValueBuffer = new();
-
-            await Task.Run(() =>
+        private Task<List<Dictionary<string, string>>> ReadContentAsync(StreamReader sr, IReadOnlyList<string> headers) =>
+            Task.Run(() =>
             {
+                List<Dictionary<string, string>> content = new();
+                StringBuilder currentValueBuffer = new();
+
                 uint col = 0;
                 uint row = 1;
 
@@ -128,6 +125,8 @@ namespace CsvReader
                     content.Add(currentRow);
                 }
 
+                return content;
+
                 void ResetBuffersForNewLine()
                 {
                     currentRow = new();
@@ -136,9 +135,6 @@ namespace CsvReader
                     row++;
                 }
             });
-
-            return content;
-        }
 
         private static (char, SymbolType) ReadSymbol(StreamReader sr)
         {
